@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Transaction;
-use App\PaymentMethod;
+use App\Models\Transaction;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 
 class MethodController extends Controller
@@ -17,7 +17,7 @@ class MethodController extends Controller
     public function index()
     {
         return view('methods.index', [
-            'methods' => PaymentMethod::paginate(15), 
+            'methods' => PaymentMethod::paginate(15),
             'month' => Carbon::now()->month
         ]);
     }
@@ -117,7 +117,7 @@ class MethodController extends Controller
     public function destroy(PaymentMethod $method)
     {
         $method->delete();
-        
+
         return back()->withStatus('Payment method successfully removed.');
     }
 }

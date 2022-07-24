@@ -34,35 +34,41 @@ Route::middleware(['auth'])->group(function () {
         'methods' => MethodController::class,
     ]);
 
-    Route::resource('transactions', [TransactionController::class])->except('create', 'show');
-    Route::get('transactions/stats/{year?}/{month?}/{day?}', ['as' => 'transactions.stats', 'uses' => TransactionController::class, 'stats']);
-    Route::get('transactions/{type}', ['as' => 'transactions.type', 'uses' => 'TransactionController@type']);
-    Route::get('transactions/{type}/create', ['as' => 'transactions.create', 'uses' => 'TransactionController@create']);
-    Route::get('transactions/{transaction}/edit', ['as' => 'transactions.edit', 'uses' => 'TransactionController@edit']);
+    Route::resource('transactions', TransactionController::class)->except('create', 'show');
+    Route::get('transactions/stats/{year?}/{month?}/{day?}', [TransactionController::class, 'stats'])->name('transactions.stats');
+    Route::get('transactions/{type}', [TransactionController::class, 'type'])->name('transactions.type');
+    Route::get('transactions/{type}/create', [TransactionController::class, 'create'])->name('transactions.create');
+    Route::get('transactions/{transaction}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
 
-    Route::get('inventory/stats/{year?}/{month?}/{day?}', ['as' => 'inventory.stats', 'uses' => 'InventoryController@stats']);
-    Route::resource('inventory/receipts', 'ReceiptController')->except(['edit', 'update']);
-    Route::get('inventory/receipts/{receipt}/finalize', ['as' => 'receipts.finalize', 'uses' => 'ReceiptController@finalize']);
-    Route::get('inventory/receipts/{receipt}/product/add', ['as' => 'receipts.product.add', 'uses' => 'ReceiptController@addproduct']);
-    Route::get('inventory/receipts/{receipt}/product/{receivedproduct}/edit', ['as' => 'receipts.product.edit', 'uses' => 'ReceiptController@editproduct']);
-    Route::post('inventory/receipts/{receipt}/product', ['as' => 'receipts.product.store', 'uses' => 'ReceiptController@storeproduct']);
-    Route::match(['put', 'patch'], 'inventory/receipts/{receipt}/product/{receivedproduct}', ['as' => 'receipts.product.update', 'uses' => 'ReceiptController@updateproduct']);
-    Route::delete('inventory/receipts/{receipt}/product/{receivedproduct}', ['as' => 'receipts.product.destroy', 'uses' => 'ReceiptController@destroyproduct']);
+    Route::get('inventory/stats/{year?}/{month?}/{day?}', [InventoryController::class, 'stats'])->name('inventory.stats');
+    Route::resource('inventory/receipts', ReceiptController::class)->except(['edit', 'update']);
+    Route::get('inventory/receipts/{receipt}/finalize', [ReceiptController::class, 'finalize']);
+    Route::get('inventory/receipts/{receipt}/product/add', [ReceiptController::class, 'addproduct']);
+    Route::get('inventory/receipts/{receipt}/product/{receivedproduct}/edit', [ReceiptController::class, 'editproduct']);
+    Route::post('inventory/receipts/{receipt}/product', [ReceiptController::class, 'storeproduct']);
+    Route::match(['put', 'patch'], 'inventory/receipts/{receipt}/product/{receivedproduct}', [ReceiptController::class, 'updateproduct']);
+    Route::delete('inventory/receipts/{receipt}/product/{receivedproduct}', [ReceiptController::class, 'destroyproduct']);
 
-    Route::resource('sales', 'SaleController')->except(['edit', 'update']);
-    Route::get('sales/{sale}/finalize', ['as' => 'sales.finalize', 'uses' => 'SaleController@finalize']);
-    Route::get('sales/{sale}/product/add', ['as' => 'sales.product.add', 'uses' => 'SaleController@addproduct']);
-    Route::get('sales/{sale}/product/{soldproduct}/edit', ['as' => 'sales.product.edit', 'uses' => 'SaleController@editproduct']);
-    Route::post('sales/{sale}/product', ['as' => 'sales.product.store', 'uses' => 'SaleController@storeproduct']);
-    Route::match(['put', 'patch'], 'sales/{sale}/product/{soldproduct}', ['as' => 'sales.product.update', 'uses' => 'SaleController@updateproduct']);
-    Route::delete('sales/{sale}/product/{soldproduct}', ['as' => 'sales.product.destroy', 'uses' => 'SaleController@destroyproduct']);
+    Route::resource('sales', SaleController::class)->except(['edit', 'update']);
+    Route::get('sales/{sale}/finalize', [SaleController::class, 'finalize'])->name('sales.finalize');
+    Route::get('sales/{sale}/product/add', [SaleController::class, 'addproduct'])->name('sales.product.add');
+    Route::get('sales/{sale}/product/{soldproduct}/edit', [SaleController::class, 'editproduct'])->name('sales.product.edit');
+    Route::post('sales/{sale}/product', [SaleController::class, 'storeproduct'])->name('sales.product.store');
+    Route::match(['put', 'patch'], 'sales/{sale}/product/{soldproduct}', [SaleController::class, 'updateproduct']);
+    Route::delete('sales/{sale}/product/{soldproduct}', [SaleController::class, 'destroyproduct'])->name('sales.product.destroy');
 
-    Route::get('clients/{client}/transactions/add', ['as' => 'clients.transactions.add', 'uses' => 'ClientController@addtransaction']);
+    Route::get('clients/{client}/transactions/add', [ClientController::class, 'addtransaction'])->name('clients.transactions.add');
 
-    Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
-    Route::match(['put', 'patch'], 'profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
-    Route::match(['put', 'patch'], 'profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::match(['put', 'patch'], 'profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::match(['put', 'patch'], 'profile/password', [ProfileController::class, 'password'])->name('profile.password');
+});
 
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('icons', [PageController::class, 'icons']);
+    Route::get('notifications', [PageController::class, 'notifications']);
+    Route::get('tables', [PageController::class, 'tables']);
+    Route::get('typography', [PageController::class, 'typography']);
 });
 
 

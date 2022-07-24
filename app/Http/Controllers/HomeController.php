@@ -9,6 +9,7 @@ use App\Models\SoldProduct;
 use App\Models\Transaction;
 use App\Models\PaymentMethod;
 
+
 class HomeController extends Controller
 {
     /**
@@ -34,7 +35,7 @@ class HomeController extends Controller
             'anualsales'                => $anualsales,
             'anualclients'              => $anualclients,
             'anualproducts'             => $anualproducts,
-            'lastmonths'                => array_reverse($this->getMonthlyTransactions()->get('lastmonths')),
+            'lastmonths'                => $this->getMonthlyTransactions()->get('lastmonths'),
             'lastincomes'               => $this->getMonthlyTransactions()->get('lastincomes'),
             'lastexpenses'              => $this->getMonthlyTransactions()->get('lastexpenses'),
             'semesterexpenses'          => $this->getMonthlyTransactions()->get('semesterexpenses'),

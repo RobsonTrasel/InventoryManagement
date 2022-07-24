@@ -42,7 +42,7 @@
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/bootstrap-notify.js') }}/js/plugins/bootstrap-notify.js"></script>
+    <script src="{{ asset('assets/js/plugins/bootstrap-notify.js') }}"></script>
     <script src="{{ asset('assets/js/white-dashboard.js?v=1.0.0') }}"></script>
     <script src="{{ asset('assets/js/theme.js') }}"></script>
 </body>
