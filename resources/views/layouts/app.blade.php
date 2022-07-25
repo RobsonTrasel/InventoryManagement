@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.23.0/slimselect.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/nucleo-icons.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/white-dashboard.css?v=1.0.0') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/white-dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/theme.css') }}">
 </head>
 <body class="white-content {{ $class ?? '' }}">
@@ -43,7 +43,7 @@
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/bootstrap-notify.js') }}"></script>
-    <script src="{{ asset('assets/js/white-dashboard.js?v=1.0.0') }}"></script>
+    <script src="{{ asset('assets/js/white-dashboard.js') }}"></script>
     <script src="{{ asset('assets/js/theme.js') }}"></script>
 </body>
 </html>
